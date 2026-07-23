@@ -1,0 +1,8 @@
+{
+  "users": [
+    { "userPrincipalName": "alice@contoso.com", "skuPartNumber": "M365_E3" }
+  ],
+  "groups": [
+    { "groupName": "Engineering", "skuPartNumber": "INTUNE_A" }
+  ]
+}
