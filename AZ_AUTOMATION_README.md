@@ -32,3 +32,9 @@ Example runbook parameters (Autopilot-Onboard):
 Notes:
 - The module contains scaffold functions; some TODOs remain (fine-grained Graph payloads). Implement and test in a staging tenant.
 - Use Key Vault or Automation assets for secrets and rotate them regularly.
+
+Testing the module and runbooks locally
+- Run unit tests (Pester) from the repository root:
+  - Install Pester (if missing): Install-Module -Name Pester -Scope CurrentUser
+  - Run tests: Invoke-Pester -Path tests -Verbose
+- The tests are lightweight and use -WhatIf modes where appropriate. They validate the runbook-critical behaviors (CSV parsing, WhatIf output, mapping handling). Update tests to mock Graph calls for integration tests against a real tenant.
