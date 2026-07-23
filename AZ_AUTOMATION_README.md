@@ -38,3 +38,13 @@ Testing the module and runbooks locally
   - Install Pester (if missing): Install-Module -Name Pester -Scope CurrentUser
   - Run tests: Invoke-Pester -Path tests -Verbose
 - The tests are lightweight and use -WhatIf modes where appropriate. They validate the runbook-critical behaviors (CSV parsing, WhatIf output, mapping handling). Update tests to mock Graph calls for integration tests against a real tenant.
+
+One-click dry-run and Automation trigger
+- Use test-dryrun-and-trigger-automation.ps1 to run local WhatIf checks and optionally trigger Automation published runbooks with WhatIf=true.
+- Local-only dry-run: .\test-dryrun-and-trigger-automation.ps1
+- Dry-run + Automation trigger (requires Az modules and signed-in user):
+  .\test-dryrun-and-trigger-automation.ps1 -AutomationSubscriptionId <sub> -ResourceGroupName <rg> -AutomationAccountName <aa>
+
+Notes:
+- The script will start published runbooks with the WhatIf parameter set to true to avoid side-effects. Monitor job output in the portal or via Get-AzAutomationJob/Get-AzAutomationJobOutput.
+- Ensure runbooks are published before triggering.
