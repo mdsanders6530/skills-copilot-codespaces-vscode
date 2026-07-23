@@ -1,0 +1,14 @@
+flowchart TD
+  Start([Start]) --> ImportModule["Import AzIntuneAgent module"]
+  ImportModule --> Auth{"Auth method?"}
+  Auth -->|AppReg cred| AppReg["Connect-AzAccount -ServicePrincipal\nConnect-MgGraph -ClientId/Secret"]
+  Auth -->|Managed Identity| MSI["Connect-AzIntune -ManagedIdentity\nConnect-MgGraph -Identity"]
+  AppReg --> ImportDevices["New-AutopilotImportFromCsv\n(parse CSV, normalize hash)"]
+  MSI --> ImportDevices
+  ImportDevices --> PostGraph["POST /deviceManagement/importedWindowsAutopilotDeviceIdentities"]
+  PostGraph --> GroupAssign["Ensure-IntuneGroupAssignment\n(ensure group, assign profile)"]
+  GroupAssign --> LicenseOpt{"License assignment needed?"}
+  LicenseOpt -->|Yes| LicenseAssign["Ensure-LicenseAssignment\n(resolve skuId, assign per-user/group)"]
+  LicenseOpt -->|No| Finalize
+  LicenseAssign --> Finalize["Write summary & logs\nReturn status"]
+  Finalize --> End([End])

@@ -51,5 +51,12 @@ Use cases:
 
 Notes:
 - The centralized copy invokes the repo-root script to preserve a single editable source of truth while providing a stable canonical path for automation tools and team members.
+
+Diagrams
+- Visio-friendly flow text: automation\central\diagrams\Autopilot-Onboard-flow.txt
+- Mermaid flow (useful for previews or conversion): automation\central\diagrams\Autopilot-Onboard-flow.mmd
+
+Tips:
+- Paste the Visio-friendly text into Visio's Text to Shapes tool to create shapes automatically, or use the Mermaid file with online renderers to preview the flow before Visio.
 - The script will start published runbooks with the WhatIf parameter set to true to avoid side-effects. Monitor job output in the portal or via Get-AzAutomationJob/Get-AzAutomationJobOutput.
 - Ensure runbooks are published before triggering.
