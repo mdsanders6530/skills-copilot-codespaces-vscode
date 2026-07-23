@@ -40,11 +40,16 @@ Testing the module and runbooks locally
 - The tests are lightweight and use -WhatIf modes where appropriate. They validate the runbook-critical behaviors (CSV parsing, WhatIf output, mapping handling). Update tests to mock Graph calls for integration tests against a real tenant.
 
 One-click dry-run and Automation trigger
-- Use test-dryrun-and-trigger-automation.ps1 to run local WhatIf checks and optionally trigger Automation published runbooks with WhatIf=true.
-- Local-only dry-run: .\test-dryrun-and-trigger-automation.ps1
+- A centralized copy of the dry-run script lives at: automation\central\test-dryrun-and-trigger-automation.ps1 (recommended use for team members).
+- The full editable version remains at the repo root: test-dryrun-and-trigger-automation.ps1.
+
+Use cases:
+- Local-only dry-run (repo-root): .\test-dryrun-and-trigger-automation.ps1
+- Centralized: automation\central\test-dryrun-and-trigger-automation.ps1 (invokes the repo-root script if present)
 - Dry-run + Automation trigger (requires Az modules and signed-in user):
-  .\test-dryrun-and-trigger-automation.ps1 -AutomationSubscriptionId <sub> -ResourceGroupName <rg> -AutomationAccountName <aa>
+  automation\central\test-dryrun-and-trigger-automation.ps1 -AutomationSubscriptionId <sub> -ResourceGroupName <rg> -AutomationAccountName <aa>
 
 Notes:
+- The centralized copy invokes the repo-root script to preserve a single editable source of truth while providing a stable canonical path for automation tools and team members.
 - The script will start published runbooks with the WhatIf parameter set to true to avoid side-effects. Monitor job output in the portal or via Get-AzAutomationJob/Get-AzAutomationJobOutput.
 - Ensure runbooks are published before triggering.
